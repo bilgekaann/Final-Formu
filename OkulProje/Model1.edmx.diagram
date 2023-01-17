@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0da3b3a17ac7459b9935e4e93175b2f0" Name="Diagram1">
+        <EntityTypeShape EntityType="okulllModel.pru_ders" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="okulllModel.pru_ogrenci" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="okulllModel.pru_ogrenciders" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="okulllModel.pru_okulyonetim" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="okulllModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="okulllModel.FK_pru_ders_pru_okulyonetim" ManuallyRouted="false" />
+        <AssociationConnector Association="okulllModel.FK_pru_ogrenciders_pru_ders" ManuallyRouted="false" />
+        <AssociationConnector Association="okulllModel.FK_pru_ogrenciders_pru_ogrenci" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

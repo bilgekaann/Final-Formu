@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="okulllModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="pru_ders">
+          <Key>
+            <PropertyRef Name="ders_id" />
+          </Key>
+          <Property Name="ders_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ders_ad" Type="varchar" MaxLength="50" />
+          <Property Name="ders_kredi" Type="varchar" MaxLength="50" />
+          <Property Name="ders_okulyonetimid" Type="smallint" />
+        </EntityType>
+        <EntityType Name="pru_ogrenci">
+          <Key>
+            <PropertyRef Name="ogrenci_id" />
+          </Key>
+          <Property Name="ogrenci_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ogrenci_fullname" Type="varchar" MaxLength="50" />
+          <Property Name="ogrenci_recorddate" Type="datetime" />
+          <Property Name="ogrenci_birthdate" Type="datetime" />
+          <Property Name="ogrenci_bolum" Type="varchar" MaxLength="50" />
+          <Property Name="ogrenci_no" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="pru_ogrenciders">
+          <Key>
+            <PropertyRef Name="ogrenciders_id" />
+          </Key>
+          <Property Name="ogrenciders_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ogrenciders_dersid" Type="smallint" />
+          <Property Name="ogrenciders_ogrenciid" Type="smallint" />
+        </EntityType>
+        <EntityType Name="pru_okulyonetim">
+          <Key>
+            <PropertyRef Name="yonetim_id" />
+          </Key>
+          <Property Name="yonetim_id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yonetim_adsoyad" Type="varchar" MaxLength="50" />
+          <Property Name="yonetim_gorev" Type="varchar" MaxLength="50" />
+          <Property Name="yonetim_tip" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_pru_ders_pru_okulyonetim">
+          <End Role="pru_okulyonetim" Type="Self.pru_okulyonetim" Multiplicity="0..1" />
+          <End Role="pru_ders" Type="Self.pru_ders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_okulyonetim">
+              <PropertyRef Name="yonetim_id" />
+            </Principal>
+            <Dependent Role="pru_ders">
+              <PropertyRef Name="ders_okulyonetimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pru_ogrenciders_pru_ders">
+          <End Role="pru_ders" Type="Self.pru_ders" Multiplicity="0..1" />
+          <End Role="pru_ogrenciders" Type="Self.pru_ogrenciders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_ders">
+              <PropertyRef Name="ders_id" />
+            </Principal>
+            <Dependent Role="pru_ogrenciders">
+              <PropertyRef Name="ogrenciders_dersid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pru_ogrenciders_pru_ogrenci">
+          <End Role="pru_ogrenci" Type="Self.pru_ogrenci" Multiplicity="0..1" />
+          <End Role="pru_ogrenciders" Type="Self.pru_ogrenciders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_ogrenci">
+              <PropertyRef Name="ogrenci_id" />
+            </Principal>
+            <Dependent Role="pru_ogrenciders">
+              <PropertyRef Name="ogrenciders_ogrenciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="okulllModelStoreContainer">
+          <EntitySet Name="pru_ders" EntityType="Self.pru_ders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pru_ogrenci" EntityType="Self.pru_ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pru_ogrenciders" EntityType="Self.pru_ogrenciders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pru_okulyonetim" EntityType="Self.pru_okulyonetim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_pru_ders_pru_okulyonetim" Association="Self.FK_pru_ders_pru_okulyonetim">
+            <End Role="pru_okulyonetim" EntitySet="pru_okulyonetim" />
+            <End Role="pru_ders" EntitySet="pru_ders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pru_ogrenciders_pru_ders" Association="Self.FK_pru_ogrenciders_pru_ders">
+            <End Role="pru_ders" EntitySet="pru_ders" />
+            <End Role="pru_ogrenciders" EntitySet="pru_ogrenciders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pru_ogrenciders_pru_ogrenci" Association="Self.FK_pru_ogrenciders_pru_ogrenci">
+            <End Role="pru_ogrenci" EntitySet="pru_ogrenci" />
+            <End Role="pru_ogrenciders" EntitySet="pru_ogrenciders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="okulllModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="pru_ders">
+          <Key>
+            <PropertyRef Name="ders_id" />
+          </Key>
+          <Property Name="ders_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ders_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ders_kredi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ders_okulyonetimid" Type="Int16" />
+          <NavigationProperty Name="pru_okulyonetim" Relationship="Self.FK_pru_ders_pru_okulyonetim" FromRole="pru_ders" ToRole="pru_okulyonetim" />
+          <NavigationProperty Name="pru_ogrenciders" Relationship="Self.FK_pru_ogrenciders_pru_ders" FromRole="pru_ders" ToRole="pru_ogrenciders" />
+        </EntityType>
+        <EntityType Name="pru_ogrenci">
+          <Key>
+            <PropertyRef Name="ogrenci_id" />
+          </Key>
+          <Property Name="ogrenci_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ogrenci_fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogrenci_recorddate" Type="DateTime" Precision="3" />
+          <Property Name="ogrenci_birthdate" Type="DateTime" Precision="3" />
+          <Property Name="ogrenci_bolum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ogrenci_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pru_ogrenciders" Relationship="Self.FK_pru_ogrenciders_pru_ogrenci" FromRole="pru_ogrenci" ToRole="pru_ogrenciders" />
+        </EntityType>
+        <EntityType Name="pru_ogrenciders">
+          <Key>
+            <PropertyRef Name="ogrenciders_id" />
+          </Key>
+          <Property Name="ogrenciders_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ogrenciders_dersid" Type="Int16" />
+          <Property Name="ogrenciders_ogrenciid" Type="Int16" />
+          <NavigationProperty Name="pru_ders" Relationship="Self.FK_pru_ogrenciders_pru_ders" FromRole="pru_ogrenciders" ToRole="pru_ders" />
+          <NavigationProperty Name="pru_ogrenci" Relationship="Self.FK_pru_ogrenciders_pru_ogrenci" FromRole="pru_ogrenciders" ToRole="pru_ogrenci" />
+        </EntityType>
+        <EntityType Name="pru_okulyonetim">
+          <Key>
+            <PropertyRef Name="yonetim_id" />
+          </Key>
+          <Property Name="yonetim_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yonetim_adsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="yonetim_gorev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="yonetim_tip" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="pru_ders" Relationship="Self.FK_pru_ders_pru_okulyonetim" FromRole="pru_okulyonetim" ToRole="pru_ders" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_pru_ders_pru_okulyonetim">
+          <End Role="pru_okulyonetim" Type="Self.pru_okulyonetim" Multiplicity="0..1" />
+          <End Role="pru_ders" Type="Self.pru_ders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_okulyonetim">
+              <PropertyRef Name="yonetim_id" />
+            </Principal>
+            <Dependent Role="pru_ders">
+              <PropertyRef Name="ders_okulyonetimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pru_ogrenciders_pru_ders">
+          <End Role="pru_ders" Type="Self.pru_ders" Multiplicity="0..1" />
+          <End Role="pru_ogrenciders" Type="Self.pru_ogrenciders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_ders">
+              <PropertyRef Name="ders_id" />
+            </Principal>
+            <Dependent Role="pru_ogrenciders">
+              <PropertyRef Name="ogrenciders_dersid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pru_ogrenciders_pru_ogrenci">
+          <End Role="pru_ogrenci" Type="Self.pru_ogrenci" Multiplicity="0..1" />
+          <End Role="pru_ogrenciders" Type="Self.pru_ogrenciders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pru_ogrenci">
+              <PropertyRef Name="ogrenci_id" />
+            </Principal>
+            <Dependent Role="pru_ogrenciders">
+              <PropertyRef Name="ogrenciders_ogrenciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="okulllEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pru_ders" EntityType="Self.pru_ders" />
+          <EntitySet Name="pru_ogrenci" EntityType="Self.pru_ogrenci" />
+          <EntitySet Name="pru_ogrenciders" EntityType="Self.pru_ogrenciders" />
+          <EntitySet Name="pru_okulyonetim" EntityType="Self.pru_okulyonetim" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_pru_ders_pru_okulyonetim" Association="Self.FK_pru_ders_pru_okulyonetim">
+            <End Role="pru_okulyonetim" EntitySet="pru_okulyonetim" />
+            <End Role="pru_ders" EntitySet="pru_ders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pru_ogrenciders_pru_ders" Association="Self.FK_pru_ogrenciders_pru_ders">
+            <End Role="pru_ders" EntitySet="pru_ders" />
+            <End Role="pru_ogrenciders" EntitySet="pru_ogrenciders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pru_ogrenciders_pru_ogrenci" Association="Self.FK_pru_ogrenciders_pru_ogrenci">
+            <End Role="pru_ogrenci" EntitySet="pru_ogrenci" />
+            <End Role="pru_ogrenciders" EntitySet="pru_ogrenciders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="okulllModelStoreContainer" CdmEntityContainer="okulllEntities">
+          <EntitySetMapping Name="pru_ders">
+            <EntityTypeMapping TypeName="okulllModel.pru_ders">
+              <MappingFragment StoreEntitySet="pru_ders">
+                <ScalarProperty Name="ders_id" ColumnName="ders_id" />
+                <ScalarProperty Name="ders_ad" ColumnName="ders_ad" />
+                <ScalarProperty Name="ders_kredi" ColumnName="ders_kredi" />
+                <ScalarProperty Name="ders_okulyonetimid" ColumnName="ders_okulyonetimid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pru_ogrenci">
+            <EntityTypeMapping TypeName="okulllModel.pru_ogrenci">
+              <MappingFragment StoreEntitySet="pru_ogrenci">
+                <ScalarProperty Name="ogrenci_id" ColumnName="ogrenci_id" />
+                <ScalarProperty Name="ogrenci_fullname" ColumnName="ogrenci_fullname" />
+                <ScalarProperty Name="ogrenci_recorddate" ColumnName="ogrenci_recorddate" />
+                <ScalarProperty Name="ogrenci_birthdate" ColumnName="ogrenci_birthdate" />
+                <ScalarProperty Name="ogrenci_bolum" ColumnName="ogrenci_bolum" />
+                <ScalarProperty Name="ogrenci_no" ColumnName="ogrenci_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pru_ogrenciders">
+            <EntityTypeMapping TypeName="okulllModel.pru_ogrenciders">
+              <MappingFragment StoreEntitySet="pru_ogrenciders">
+                <ScalarProperty Name="ogrenciders_id" ColumnName="ogrenciders_id" />
+                <ScalarProperty Name="ogrenciders_dersid" ColumnName="ogrenciders_dersid" />
+                <ScalarProperty Name="ogrenciders_ogrenciid" ColumnName="ogrenciders_ogrenciid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pru_okulyonetim">
+            <EntityTypeMapping TypeName="okulllModel.pru_okulyonetim">
+              <MappingFragment StoreEntitySet="pru_okulyonetim">
+                <ScalarProperty Name="yonetim_id" ColumnName="yonetim_id" />
+                <ScalarProperty Name="yonetim_adsoyad" ColumnName="yonetim_adsoyad" />
+                <ScalarProperty Name="yonetim_gorev" ColumnName="yonetim_gorev" />
+                <ScalarProperty Name="yonetim_tip" ColumnName="yonetim_tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="okulllModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
